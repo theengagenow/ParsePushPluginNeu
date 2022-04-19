@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="ParsePushPluginNeu"
+    version="1.0.0">
+    <name>ParsePushPluginNeu</name>
+    <description>The coolest new plugin version for Parse Push Notifications</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,coolest,lite,ParsePushPluginNeu,Parse,Push,Notification</keywords>
+    <repo></repo>
+    <issue></issue>
+
+    <js-module src="www/ParsePushPluginNeu.js" name="ParsePushPluginNeu">
+        <clobbers target="ParsePushPluginNeu" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="ParsePushPluginNeu" >
+                <param name="android-package" value="com.theengagenow.ParsePushPluginNeu.ParsePushPluginNeu"/>
+            </feature>
+        </config-file>
+        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
+        <service android:name="com.parse.fcm.ParseFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <receiver android:exported="false" android:name="com.parse.ParsePushBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.parse.push.intent.DELETE" />
+            </intent-filter>
+        </receiver>
+         <receiver android:exported="false" android:name="com.theengagenow.ParsePushPluginNeu.ParsePushPluginNeuReceiver">
+            <intent-filter>
+               <action android:name="com.parse.push.intent.RECEIVE" />
+               <action android:name="com.parse.push.intent.OPEN" />
+            </intent-filter>
+         </receiver>
+      </config-file>
+      <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest">
+         <uses-permission android:name="android.permission.INTERNET" />
+         <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+         <uses-permission android:name="android.permission.WAKE_LOCK" />
+         <uses-permission android:name="android.permission.VIBRATE" />
+         <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+         <permission android:protectionLevel="signature" android:name="${applicationId}.permission.C2D_MESSAGE" />
+         <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
+      </config-file>
+        <!-- <framework src="com.parse:parse-android:1.+" />
+        <framework src="com.parse.bolts:bolts-android:1.4.0" /> -->
+        <source-file src="src/android/ParsePushPluginNeuReceiver.java" target-dir="src/com/theengagenow/ParsePushPluginNeu" />
+        <source-file src="src/android/ParsePushPluginNeu.java" target-dir="src/com/theengagenow/ParsePushPluginNeu" />
+    </platform>
+
+
+</plugin>
